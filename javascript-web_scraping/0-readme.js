@@ -2,8 +2,10 @@
 
 const fs = require('fs')
 
-// read data
-fs.readFile('0-readme.js', 'utf-8', (err, data) => {
-  if (err) throw err;
-  console.log(data);
-})
+fs.readFile(process.argv[2], 'utf-8', (err. data) => {
+  if (err) {
+    console.error(err);
+    } else {
+      console.log(data);
+    }
+});
