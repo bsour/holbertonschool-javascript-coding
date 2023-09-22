@@ -1,26 +1,30 @@
 #!/usr/bin/node
 
 const request = require('request');
-
-if (process.argv.length !== 3) {
-  console.error('Usage: ./4-starwars_count.js API_URL');
-  process.exit(1);
-}
-
+// request URL
 const apiUrl = process.argv[2];
-const characterId = 18;
+const charId = '18';
 
-request(apiUrl, (error, response, body) => {
-  if (error) {
-    console.error('Error:', error);
-    process.exit(1);
+request.get(apiUrl, (err, response, body) => {
+  if (err) {
+    console.log(err);
+  } else {
+    const movieData = JSON.parse(body);
+    // movieResults is a list contains info of a list of characters url
+    const movieResults = movieData.results;
+
+    // initialize a counter
+    let count = 0;
+
+    movieResults.forEach(movie => {
+      const characters = movie.characters;
+      characters.forEach(charUrl => {
+        if (charUrl.includes(`${charId}`)) {
+          count++;
+        }
+      });
+    });
+
+    console.log(count);
   }
-
-  const data = JSON.parse(body);
-
-  const filmsWithWedge = data.results.filter((film) =>
-    film.characters.includes(`${apiUrl}people/${characterId}/`)
-  );
-
-  console.log(filmsWithWedge.length);
 });
