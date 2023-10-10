@@ -8,18 +8,23 @@ const app = http.createServer((req, res) => {
   } else if (req.url === '/students') {
     countStudents(process.argv[2])
       .then((studentData) => {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.write('This is the list of our students\n');
-        res.write(studentData); // Assuming countStudents resolves with the formatted student data
-        res.end();
+        const responseText = `This is the list of our students\n${studentData}`;
+        res.writeHead(200, {
+          'Content-Type': 'text/plain',
+          'Content-Length': Buffer.byteLength(responseText),
+        });
+        res.end(responseText);
       })
       .catch((error) => {
-        res.writeHead(500, { 'Content-Type': 'text/plain' }); // Internal Server Error
-        res.write('This is the list of our students\n');
-        res.end(error.message);
+        const responseText = `This is the list of our students\n${error.message}`;
+        res.writeHead(500, {
+          'Content-Type': 'text/plain',
+          'Content-Length': Buffer.byteLength(responseText),
+        });
+        res.end(responseText);
       });
   } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' }); // Not Found for other endpoints
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
     res.end('Not Found');
   }
 });
