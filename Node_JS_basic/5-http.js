@@ -10,11 +10,12 @@ const app = http.createServer((req, res) => {
       .then((studentData) => {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.write('This is the list of our students\n');
-        res.write(studentData); // Assuming countStudents resolves with student data
+        res.write(studentData); // Assuming countStudents resolves with the formatted student data
         res.end();
       })
       .catch((error) => {
         res.writeHead(500, { 'Content-Type': 'text/plain' }); // Internal Server Error
+        res.write('This is the list of our students\n');
         res.end(error.message);
       });
   } else {
