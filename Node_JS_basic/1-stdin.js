@@ -5,12 +5,12 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-console.log('Welcome to Holberton School, what is your name?\r');
+console.log('Welcome to Holberton School, what is your name?');
 
 rl.on('line', (name) => {
-  console.log(`Your name is: ${name}\r`);
+  console.log(`Your name is: ${name}`);
   if (!process.stdin.isTTY) {
-    console.log('This important software is now closing\r');
+    console.log('This important software is now closing');
     process.exit(0);
   } else {
     rl.close();
@@ -19,6 +19,12 @@ rl.on('line', (name) => {
 
 rl.on('close', () => {
   if (process.stdin.isTTY) {
-    console.log('This important software is now closing\r');
+    console.log('This important software is now closing');
   }
+});
+
+// Handle EOF
+process.stdin.on('end', () => {
+  console.log('This important software is now closing');
+  process.exit(0);
 });
