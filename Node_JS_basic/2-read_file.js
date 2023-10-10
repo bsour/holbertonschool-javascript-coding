@@ -11,7 +11,7 @@ function countStudents(path) {
   }
 
   // Split the data into lines
-  const lines = data.split('\n').filter((line) => line);
+  const lines = data.trim().split('\n');
 
   // Remove the header
   lines.shift();
@@ -30,8 +30,11 @@ function countStudents(path) {
   }
 
   console.log(`Number of students: ${lines.length}`);
-  for (const [field, students] of Object.entries(fields)) {
-    console.log(`Number of students in ${field}: ${students.length}. List: ${students.join(', ')}`);
+  if (fields.CS) {
+    console.log(`Number of students in CS: ${fields.CS.length}. List: ${fields.CS.join(', ')}`);
+  }
+  if (fields.SWE) {
+    console.log(`Number of students in SWE: ${fields.SWE.length}. List: ${fields.SWE.join(', ')}`);
   }
 }
 
